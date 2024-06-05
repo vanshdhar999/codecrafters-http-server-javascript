@@ -9,7 +9,8 @@ const server = net.createServer((socket) => {
     const request = data.toString().split(" ");
     console.log(request);
     if(request[1] == '/'){
-        socket.write("HTTP/1.1 200 OK\r\n");
+        socket.write("HTTP/1.1 200 OK\r\n\r\n");
+        return;
     }
     const strRequest = request[1].split('/');
     const echoExists =  strRequest.find((elem) => elem === 'echo');
@@ -17,7 +18,7 @@ const server = net.createServer((socket) => {
         socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${strRequest[2].length}\r\n\r\n${strRequest[2]}`)
     }
     else{
-        socket.write("HTTP/1.1 404 Not Found\r\n")
+        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
   });
   socket.on('close', ()=>{
