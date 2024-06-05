@@ -8,13 +8,9 @@ const server = net.createServer((socket) => {
   socket.on('data', (data) => {
     const request = data.toString().split(" ");
     console.log(request);
-    if(request[0] === 'GET' && request[1] === '/'){
-        socket.write("HTTP/1.1 200 OK\r\n\r\n");
-    }
-    else{
-        socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
-    }
-
+    const strRequest = request[1].split('/');
+    console.log(strRequest);
+    socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${strRequest[2].length}\r\n\r\n${strRequest[2]}`)
   });
   socket.on('close', ()=>{
     socket.end();
